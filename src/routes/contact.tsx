@@ -66,7 +66,7 @@ function ContactPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Fill out the form below and we will respond as soon as possible.
             </p>
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-card-foreground">Name</label>
