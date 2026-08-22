@@ -165,7 +165,7 @@ function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
-          <img src={logo} alt="Pior" className="h-8 w-8" />
+          <img src="/favicon.png" alt="Pior" className="h-8 w-8" />
           <span className="hidden sm:inline">Pior Export Import PLC</span>
           <span className="sm:hidden">Pior</span>
         </Link>
@@ -232,7 +232,7 @@ function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <img src={logo} alt="Pior" className="h-8 w-8" />
+              <img src="/favicon.png" alt="Pior" className="h-8 w-8" />
               Pior Export Import PLC
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
