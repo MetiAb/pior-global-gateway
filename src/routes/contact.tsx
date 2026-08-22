@@ -143,6 +143,31 @@ function ContactPage() {
         </div>
       </section>
 
+      <section className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">Find Us</h2>
+        <p className="mt-2 text-muted-foreground">
+          Kazanches, Elilly International Hotel, Second Floor, Addis Ababa, Ethiopia
+        </p>
+        <div className="mt-6 overflow-hidden rounded-2xl border border-border shadow-sm">
+          <iframe
+            title="Pior Export Import PLC office location — Elilly International Hotel, Addis Ababa"
+            src="https://www.google.com/maps?q=Elilly%20International%20Hotel%2C%20Guinea%20Conakry%20St%2C%20Addis%20Ababa%2C%20Ethiopia&z=16&output=embed"
+            className="h-[420px] w-full border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Elilly+International+Hotel+Addis+Ababa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline"
+        >
+          Open in Google Maps →
+        </a>
+      </section>
+
       <section className="bg-muted/30 py-16">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-foreground">Office Hours</h2>
