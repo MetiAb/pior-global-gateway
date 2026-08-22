@@ -159,6 +159,7 @@ function ProductFeature({
             </li>
           ))}
         </ul>
+        {extra}
       </div>
     </div>
   );
