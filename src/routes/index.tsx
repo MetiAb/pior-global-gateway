@@ -40,7 +40,6 @@ function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover"
         width={1920}
         height={1024}
-        priority="true"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-coffee/70 via-coffee/50 to-background/90" />
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
