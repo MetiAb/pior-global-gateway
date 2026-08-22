@@ -120,6 +120,7 @@ function ProductFeature({
   description,
   features,
   reverse = false,
+  extra,
 }: {
   image: string;
   alt: string;
@@ -128,10 +129,11 @@ function ProductFeature({
   description: string;
   features: string[];
   reverse?: boolean;
+  extra?: React.ReactNode;
 }) {
   return (
-    <div className={`grid items-center gap-8 lg:grid-cols-2 ${reverse ? "lg:grid-flow-dense" : ""}`}>
-      <div className={`overflow-hidden rounded-2xl ${reverse ? "lg:col-start-2" : ""}`}>
+    <div className={`grid items-center gap-6 sm:grid-cols-2 sm:gap-8 ${reverse ? "sm:grid-flow-dense" : ""}`}>
+      <div className={`overflow-hidden rounded-2xl ${reverse ? "sm:col-start-2" : ""}`}>
         <img
           src={image}
           alt={alt}
@@ -141,7 +143,7 @@ function ProductFeature({
           height={1024}
         />
       </div>
-      <div className={reverse ? "lg:col-start-1" : ""}>
+      <div className={reverse ? "sm:col-start-1" : ""}>
         <span className="text-sm font-semibold uppercase tracking-widest text-primary">{label}</span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {title}
