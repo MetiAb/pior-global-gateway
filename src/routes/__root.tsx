@@ -78,12 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Pior Export Import PLC" },
-      { name: "description", content: "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets." },
+      {
+        name: "description",
+        content:
+          "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets.",
+      },
       { name: "author", content: "Pior Export Import PLC" },
       { property: "og:site_name", content: "Pior Export Import PLC" },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "Pior Export Import PLC" },
-      { property: "og:description", content: "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets." },
+      {
+        property: "og:description",
+        content:
+          "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@PiorExportImport" },
     ],
@@ -164,7 +172,10 @@ function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground"
+        >
           <img src="/favicon.png" alt="Pior" className="h-8 w-8" />
           <span className="hidden sm:inline">Pior Export Import PLC</span>
           <span className="sm:hidden">Pior</span>
@@ -236,16 +247,33 @@ function Footer() {
               Pior Export Import PLC
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              Supplying Ethiopia’s finest Wollega coffee, natural Afar salt, and quality medical products to the world.
+              Supplying Ethiopia’s finest Wollega coffee, natural Afar salt, and quality medical
+              products to the world.
             </p>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-foreground">Quick Links</h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/" className="transition-colors hover:text-foreground">Home</Link></li>
-              <li><Link to="/about" className="transition-colors hover:text-foreground">About</Link></li>
-              <li><Link to="/products" className="transition-colors hover:text-foreground">Products</Link></li>
-              <li><Link to="/contact" className="transition-colors hover:text-foreground">Contact</Link></li>
+              <li>
+                <Link to="/" className="transition-colors hover:text-foreground">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="transition-colors hover:text-foreground">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/products" className="transition-colors hover:text-foreground">
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="transition-colors hover:text-foreground">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -268,7 +296,17 @@ function Footer() {
 
 function MenuIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <line x1="4" y1="6" x2="20" y2="6" />
       <line x1="4" y1="12" x2="20" y2="12" />
       <line x1="4" y1="18" x2="20" y2="18" />
@@ -278,7 +316,17 @@ function MenuIcon() {
 
 function XIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
