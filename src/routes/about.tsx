@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import coffee from "../assets/coffee.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -24,18 +23,8 @@ function AboutPage() {
         subtitle="Our History, Mission & Vision"
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="overflow-hidden rounded-2xl">
-            <img
-              src={coffee}
-              alt="Ethiopian coffee cherries on the branch"
-              className="h-full w-full object-cover"
-              loading="lazy"
-              width={1024}
-              height={1024}
-            />
-          </div>
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+        <div>
           <div>
             <span className="text-sm font-semibold uppercase tracking-widest text-primary">Our History</span>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

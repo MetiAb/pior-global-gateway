@@ -16,6 +16,21 @@ export const Route = createFileRoute("/contact")({
   component: ContactPage,
 });
 
+const CONTACT_EMAIL = "piorinfocenter@gmail.com";
+
+function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const data = new FormData(form);
+  const name = String(data.get("name") ?? "").trim().slice(0, 100);
+  const email = String(data.get("email") ?? "").trim().slice(0, 255);
+  const subject = String(data.get("subject") ?? "").trim().slice(0, 150);
+  const message = String(data.get("message") ?? "").trim().slice(0, 2000);
+  if (!name || !email || !subject || !message) return;
+  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 function ContactPage() {
   return (
     <div className="flex flex-col">
@@ -66,12 +81,15 @@ function ContactPage() {
             <p className="mt-2 text-sm text-muted-foreground">
               Fill out the form below and we will respond as soon as possible.
             </p>
-            <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium text-card-foreground">Name</label>
                   <input
                     id="name"
+                    name="name"
+                    required
+                    maxLength={100}
                     type="text"
                     placeholder="Your name"
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -81,6 +99,9 @@ function ContactPage() {
                   <label htmlFor="email" className="text-sm font-medium text-card-foreground">Email</label>
                   <input
                     id="email"
+                    name="email"
+                    required
+                    maxLength={255}
                     type="email"
                     placeholder="you@example.com"
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -91,6 +112,9 @@ function ContactPage() {
                 <label htmlFor="subject" className="text-sm font-medium text-card-foreground">Subject</label>
                 <input
                   id="subject"
+                  name="subject"
+                  required
+                  maxLength={150}
                   type="text"
                   placeholder="Product inquiry"
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -100,6 +124,9 @@ function ContactPage() {
                 <label htmlFor="message" className="text-sm font-medium text-card-foreground">Message</label>
                 <textarea
                   id="message"
+                  name="message"
+                  required
+                  maxLength={2000}
                   rows={5}
                   placeholder="Tell us about your requirements..."
                   className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -114,6 +141,31 @@ function ContactPage() {
             </form>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">Find Us</h2>
+        <p className="mt-2 text-muted-foreground">
+          Kazanches, Elilly International Hotel, Second Floor, Addis Ababa, Ethiopia
+        </p>
+        <div className="mt-6 overflow-hidden rounded-2xl border border-border shadow-sm">
+          <iframe
+            title="Pior Export Import PLC office location — Elilly International Hotel, Addis Ababa"
+            src="https://www.google.com/maps?q=Elilly%20International%20Hotel%2C%20Guinea%20Conakry%20St%2C%20Addis%20Ababa%2C%20Ethiopia&z=16&output=embed"
+            className="h-[420px] w-full border-0"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Elilly+International+Hotel+Addis+Ababa"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex text-sm font-semibold text-primary hover:underline"
+        >
+          Open in Google Maps →
+        </a>
       </section>
 
       <section className="bg-muted/30 py-16">
