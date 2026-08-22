@@ -55,6 +55,25 @@ function ProductsPage() {
               "Unique texture and flavor profile",
             ]}
             reverse
+            extra={
+              <div className="mt-6 rounded-xl border border-border bg-card p-5">
+                <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+                  Production &amp; Storage
+                </p>
+                <dl className="mt-3 space-y-2 text-sm">
+                  <div>
+                    <dt className="font-semibold text-foreground">Producer</dt>
+                    <dd className="text-muted-foreground">Sino Salt PLC, Semera Industry Park, Afar</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold text-foreground">Warehouse</dt>
+                    <dd className="text-muted-foreground">
+                      Sheger City, Burayu, Ashewa Meda, Block 8, Shade No. 238
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            }
           />
 
           <ProductFeature
