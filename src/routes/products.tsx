@@ -30,7 +30,7 @@ function ProductsPage() {
         <div className="grid gap-12">
           <ProductFeature
             image={coffee}
-            alt="Premium Wollega coffee beans"
+            alt="Wollega coffee beans"
             label="Specialty Coffee"
             title="Wollega Origin Coffee"
             description="We supply premium Ethiopian coffee sourced from the Wollega region, known for its distinctive rich flavor, full body, and exceptional quality. Our coffee is carefully selected and processed to preserve its authentic Ethiopian character."
@@ -44,7 +44,7 @@ function ProductsPage() {
 
           <ProductFeature
             image={salt}
-            alt="Natural Afar salt mounds at sunset"
+            alt="Natural Afar salt mounds in Ethiopia"
             label="Natural Salt"
             title="Natural Iodised Afar Salt"
             description="Our natural iodised salt is sourced from the Afar region, an area renowned for traditional salt harvesting methods that date back centuries. The salt is carefully hand-harvested and processed to maintain its purity and natural mineral composition."

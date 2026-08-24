@@ -25,8 +25,11 @@ export const Route = createFileRoute("/contact")({
 });
 
 const CONTACT_EMAIL = "piorinfocenter@gmail.com";
+const WEB3FORMS_ACCESS_KEY = "bac07d11-dc38-43f6-b82b-79fb4ad828c2";
 
-function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+async function submitToWeb3Forms(
+  e: React.FormEvent<HTMLFormElement>,
+): Promise<boolean> {
   e.preventDefault();
   const form = e.currentTarget;
   const data = new FormData(form);
@@ -42,15 +45,57 @@ function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   const message = String(data.get("message") ?? "")
     .trim()
     .slice(0, 2000);
-  if (!name || !email || !subject || !message) return;
-  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  if (!name || !email || !subject || !message) return false;
+
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_ACCESS_KEY,
+      name,
+      email,
+      subject,
+      message,
+      replyto: email,
+      from_name: "Pior Export Import PLC website",
+    }),
+  });
+  const result = (await response.json()) as { success?: boolean };
+  return response.ok && result.success === true;
 }
 
 function ContactPage() {
   const [inquiryType, setInquiryType] = useState("Coffee & salt");
   const [messageLength, setMessageLength] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<"success" | "error" | null>(null);
   const inquiryTypes = ["Coffee & salt", "Medical supplies", "Partnership"];
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (isSubmitting) {
+      e.preventDefault();
+      return;
+    }
+
+    const form = e.currentTarget;
+    setIsSubmitting(true);
+    setSubmissionStatus(null);
+    try {
+      const submitted = await submitToWeb3Forms(e);
+      if (submitted) {
+        form.reset();
+        setInquiryType("Coffee & salt");
+        setMessageLength(0);
+        setSubmissionStatus("success");
+      } else {
+        setSubmissionStatus("error");
+      }
+    } catch {
+      setSubmissionStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="flex flex-col">
@@ -177,11 +222,22 @@ function ContactPage() {
                 />
                 <p className="text-right text-xs text-muted-foreground">{messageLength}/2000</p>
               </div>
+                {submissionStatus === "success" && (
+                  <p className="text-sm text-green-600" role="status">
+                    Thank you. Your inquiry has been sent successfully.
+                  </p>
+                )}
+                {submissionStatus === "error" && (
+                  <p className="text-sm text-destructive" role="alert">
+                    We could not send your inquiry. Please try again.
+                  </p>
+                )}
               <button
                 type="submit"
+                  disabled={isSubmitting}
                 className="w-full rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
