@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Compass, Eye, Handshake } from "lucide-react";
+import {
+  ArrowRight,
+  Boxes,
+  Check,
+  Coffee,
+  Eye,
+  Handshake,
+  HeartPulse,
+  Sparkles,
+} from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/about")({
@@ -30,27 +39,23 @@ function AboutPage() {
   const pillars = {
     Mission: {
       icon: Handshake,
-      label: "How we work",
-      title: "Empowering Producers",
+      label: "Our Mission",
+      title: "Connecting markets with purpose",
       description:
-        "We connect Ethiopian farmers and producers with reliable international buyers, creating fair trade, consistent quality, and sustainable growth across every partnership.",
-      points: [
-        "Direct producer relationships",
-        "Transparent sourcing",
-        "Partnerships built to last",
-      ],
+        "PIOR's mission is to connect markets through reliable trade, responsible sourcing, efficient supply chains, and long-term commercial partnerships.",
+      points: ["Reliable trade", "Responsible sourcing", "Efficient supply chains"],
+      detail:
+        "We seek to create value across coffee export, salt wholesale, and our growing pharmaceutical activities. As we grow, we remain centered on responsible business, sustainable value creation, and trusted connections between suppliers, businesses, and markets.",
     },
     Vision: {
       icon: Eye,
       label: "Where we are going",
-      title: "A Trusted Global Name",
+      title: "A trusted global name",
       description:
-        "We are building a leading Ethiopian export and import company recognized for premium Wollega coffee, natural Afar salt, and trusted medical supplies.",
-      points: [
-        "Premium Ethiopian products",
-        "Dependable global logistics",
-        "Excellence at every step",
-      ],
+        "PIOR's vision is to become a trusted and diversified Ethiopian commercial enterprise, recognized for reliable trade, responsible supply chains, strong partnerships, and sustainable growth.",
+      points: ["Coffee export", "Salt wholesale", "Pharmaceuticals"],
+      detail:
+        "By developing our people, partnerships, infrastructure, and supply-chain capabilities, we connect Ethiopian and international markets.",
     },
   } as const;
   const pillar = pillars[activePillar as keyof typeof pillars];
@@ -62,23 +67,38 @@ function AboutPage() {
 
       <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
         <div>
-          <div>
-            <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-              Our History
-            </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Built on Ethiopian Heritage
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Pior Export Import PLC was founded in 2021 in Addis Ababa, Ethiopia. The company was
-              established to supply high-quality Ethiopian products to exporters and international
-              markets.
-            </p>
-            <p className="mt-4 text-muted-foreground">
-              From sourcing premium coffee in Qelem Wollega to natural salt from Afar, we have built
-              strong relationships with producers and buyers worldwide. Our commitment is to deliver
-              consistent quality, transparent sourcing, and dependable logistics.
-            </p>
+          <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Our History
+          </span>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Built on Ethiopian Heritage
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+            From a focused trading company to a growing multi-sector enterprise, every step has
+            strengthened the way PIOR connects products, people, and markets.
+          </p>
+          <div className="relative mt-10 space-y-5 before:absolute before:bottom-5 before:left-6 before:top-5 before:w-px before:bg-border">
+            <HistoryCard
+              icon={Coffee}
+              year="2013 E.C. / July 2021 G.C."
+              title="Where it began"
+              description="PIOR Export Import PLC began its journey as a multi-sector commercial enterprise within Ethiopia's trading environment."
+              color="bg-gold/15 text-gold"
+            />
+            <HistoryCard
+              icon={Boxes}
+              year="Growing experience"
+              title="Building the foundation"
+              description="We developed practical experience across coffee export supply chains, edible salt wholesale trade, logistics, and commercial distribution."
+              color="bg-primary/10 text-primary"
+            />
+            <HistoryCard
+              icon={HeartPulse}
+              year="Today and beyond"
+              title="Expanding with purpose"
+              description="Our strong foundation in supply-chain execution, financial discipline, operations, and relationships now supports pharmaceutical importation and wholesale distribution."
+              color="bg-accent/15 text-accent"
+            />
           </div>
         </div>
       </section>
@@ -113,12 +133,13 @@ function AboutPage() {
               <div className="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-gold/20" />
               <div className="relative">
                 <div className="flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <div className="flex h-14 w-14 rotate-[-3deg] items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-transform duration-500 hover:rotate-3">
                     <PillarIcon className="h-6 w-6" />
                   </div>
-                  <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  <div className="flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                    <Sparkles className="h-3.5 w-3.5 text-gold" />
                     {pillar.label}
-                  </span>
+                  </div>
                 </div>
                 <h3 className="mt-7 text-2xl font-bold text-card-foreground">{pillar.title}</h3>
                 <p className="mt-4 leading-7 text-muted-foreground">{pillar.description}</p>
@@ -126,12 +147,30 @@ function AboutPage() {
                   {pillar.points.map((point) => (
                     <div
                       key={point}
-                      className="flex items-center gap-2 text-sm font-medium text-foreground"
+                      className="group flex items-center gap-2 rounded-xl border border-border/70 bg-muted/40 px-3 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/5"
                     >
-                      <Check className="h-4 w-4 text-accent" />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent transition-transform group-hover:scale-110">
+                        <Check className="h-4 w-4" />
+                      </span>
                       {point}
                     </div>
                   ))}
+                </div>
+                <div className="mt-8 border-t border-border/70 pt-6">
+                  <div className="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                    <span>Our direction</span>
+                    <span className="text-primary">Always moving forward</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {["People", "Partnerships", "Markets"].map((step, index) => (
+                      <div key={step} className="flex min-w-0 flex-1 items-center gap-2">
+                        <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-gold ring-4 ring-gold/15" />
+                        <span className="truncate text-xs font-medium text-foreground">{step}</span>
+                        {index < 2 && <div className="h-px flex-1 bg-border" />}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground">{pillar.detail}</p>
                 </div>
               </div>
             </div>
@@ -147,7 +186,7 @@ function AboutPage() {
             </h3>
             <p className="mt-4 text-primary-foreground/90">
               Discover the full range of Wollega coffee, Afar salt, and medical supplies we offer to
-              international partners.
+              our customers.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
@@ -171,12 +210,44 @@ function AboutPage() {
   );
 }
 
+function HistoryCard({
+  icon: Icon,
+  year,
+  title,
+  description,
+  color,
+}: {
+  icon: typeof Coffee;
+  year: string;
+  title: string;
+  description: string;
+  color: string;
+}) {
+  return (
+    <div className="group relative flex gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:gap-5 sm:p-6">
+      <div
+        className={`relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${color} transition-transform duration-300 group-hover:rotate-6`}
+      >
+        <Icon className="h-5 w-5" />
+      </div>
+      <div className="min-w-0">
+        <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+          {year}
+        </span>
+        <h3 className="mt-1 text-xl font-semibold text-card-foreground">{title}</h3>
+        <p className="mt-2 leading-6 text-muted-foreground">{description}</p>
+      </div>
+    </div>
+  );
+}
+
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="border-b border-border bg-muted/30 py-20">
+    <div className="relative overflow-hidden border-b border-coffee/80 bg-coffee py-20 text-salt">
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-lg text-muted-foreground">{subtitle}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">{title}</h1>
+        <p className="mt-4 text-lg text-salt/80">{subtitle}</p>
       </div>
     </div>
   );

@@ -101,7 +101,7 @@ function ContactPage() {
     <div className="flex flex-col">
       <PageHeader
         title="Contact Us"
-        subtitle="We’d love to hear from you. Reach out for product inquiries, partnerships, or export orders."
+        subtitle="We’d love to hear from you. Reach out for supply and export orders."
       />
 
       <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -327,10 +327,11 @@ function ContactCard({
 
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="border-b border-border bg-muted/30 py-20">
+    <div className="relative overflow-hidden border-b border-coffee/80 bg-coffee py-20 text-salt">
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-lg text-muted-foreground">{subtitle}</p>
+        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">{title}</h1>
+        <p className="mt-4 text-lg text-salt/80">{subtitle}</p>
       </div>
     </div>
   );

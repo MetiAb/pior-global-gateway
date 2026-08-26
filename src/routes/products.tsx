@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import coffee from "../assets/coffee.jpg";
+import rawCoffeeBeans from "../assets/raw-coffee-beans.jpg";
 import salt from "../assets/salt.jpg";
 import medical from "../assets/medical.jpg";
+
 
 export const Route = createFileRoute("/products")({
   head: () => ({
@@ -29,14 +30,14 @@ function ProductsPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12">
           <ProductFeature
-            image={coffee}
+            image={rawCoffeeBeans}
             alt="Wollega coffee beans"
-            label="Specialty Coffee"
+            label="High Land Commercial Coffee"
             title="Wollega Origin Coffee"
             description="We supply premium Ethiopian coffee sourced from the Wollega region, known for its distinctive rich flavor, full body, and exceptional quality. Our coffee is carefully selected and processed to preserve its authentic Ethiopian character."
             features={[
               "Direct from coffee collection centres in Qelem Wollega",
-              "100% Arabica, shade-grown, hand-sorted",
+              "100% Arabica and hand-sorted",
               "Available as green beans for export",
               "Rich flavor, full body, and complex notes",
             ]}
@@ -63,7 +64,7 @@ function ProductsPage() {
                 <dl className="mt-3 space-y-2 text-sm">
                   <div>
                     <dt className="font-semibold text-foreground">Producer</dt>
-                    <dd className="text-muted-foreground">Sino Salt PLC, Semera Industry Park, Afar</dd>
+                    <dd className="text-muted-foreground">Sino Salt PLC and other manufacturers</dd>
                   </div>
                   <div>
                     <dt className="font-semibold text-foreground">Warehouse</dt>
@@ -81,7 +82,7 @@ function ProductsPage() {
             alt="Medical devices and healthcare supplies"
             label="Medical Supplies"
             title="Medicine & Medical Device Imports"
-            description="Pior Export Import PLC imports quality medicines and medical devices, supporting healthcare providers with reliable products and compliant sourcing."
+            description="We import quality-assured medicines from qualified international suppliers and distribute them reliably to healthcare providers, pharmacies, and wholesalers across Ethiopia"
             features={[
               "Trusted medical device sourcing",
               "Compliant import procedures",
@@ -167,12 +168,13 @@ function ProductFeature({
 
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="border-b border-border bg-muted/30 py-20">
+    <div className="relative overflow-hidden border-b border-coffee/80 bg-coffee py-20 text-salt">
+      <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">
           {title}
         </h1>
-        <p className="mt-4 text-lg text-muted-foreground">{subtitle}</p>
+        <p className="mt-4 text-lg text-salt/80">{subtitle}</p>
       </div>
     </div>
   );
