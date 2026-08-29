@@ -168,11 +168,11 @@ function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground"
+          className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground transition-transform hover:scale-[1.01]"
         >
           <img src="/favicon.png" alt={t("logoAlt")} className="h-8 w-8" />
           <span className="hidden sm:inline">{t("siteTitle")}</span>
@@ -184,15 +184,15 @@ function Header() {
             <Link
               key={link.to}
               to={link.to}
-              activeProps={{ className: "text-primary font-medium" }}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              activeProps={{ className: "text-primary font-semibold" }}
+              className="relative text-sm font-medium text-muted-foreground transition-all duration-200 hover:text-foreground"
             >
               {link.label}
             </Link>
           ))}
           <Link
             to="/contact"
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
           >
             {t("getInTouch")}
           </Link>
@@ -201,37 +201,39 @@ function Header() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-md p-2 text-foreground md:hidden"
+          className="rounded-md p-2 text-foreground transition-colors hover:bg-muted md:hidden"
           aria-label={t("toggleMenu")}
+          aria-expanded={isOpen}
         >
           {isOpen ? <XIcon /> : <MenuIcon />}
         </button>
       </div>
 
-      {isOpen && (
-        <div className="border-t border-border bg-background md:hidden">
-          <nav className="flex flex-col gap-2 px-4 py-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setIsOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
+      <div
+        className={`overflow-hidden border-t border-border bg-background/95 transition-all duration-300 ease-out md:hidden ${isOpen ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
+      >
+        <nav className="flex flex-col gap-2 px-4 py-4">
+          {navLinks.map((link) => (
             <Link
-              to="/contact"
+              key={link.to}
+              to={link.to}
               onClick={() => setIsOpen(false)}
-              className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              activeProps={{ className: "bg-primary/5 text-primary" }}
             >
-              {t("getInTouch")}
+              {link.label}
             </Link>
-            <LanguageSwitcher language={language} setLanguage={setLanguage} t={t} />
-          </nav>
-        </div>
-      )}
+          ))}
+          <Link
+            to="/contact"
+            onClick={() => setIsOpen(false)}
+            className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-primary-foreground transition-transform duration-200 hover:-translate-y-0.5 hover:bg-primary/90"
+          >
+            {t("getInTouch")}
+          </Link>
+          <LanguageSwitcher language={language} setLanguage={setLanguage} t={t} />
+        </nav>
+      </div>
     </header>
   );
 }
@@ -247,10 +249,12 @@ function Footer() {
               <img src="/favicon.png" alt={t("logoAlt")} className="h-8 w-8" />
               {t("siteTitle")}
             </div>
-            <p className="mt-4 text-sm text-muted-foreground">{t("footerText")}</p>
+            <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("footerText")}</p>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">{t("quickLinks")}</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-foreground">
+              {t("quickLinks")}
+            </h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link to="/" className="transition-colors hover:text-foreground">
@@ -275,7 +279,9 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">{t("contact")}</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-foreground">
+              {t("contact")}
+            </h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>piorinfocenter@gmail.com</li>
               <li>+251 911 228 457</li>
@@ -297,28 +303,38 @@ function LanguageSwitcher({
   setLanguage,
   t,
 }: {
-  language: "en" | "am";
-  setLanguage: (language: "en" | "am") => void;
+  language: "en" | "am" | "om";
+  setLanguage: (language: "en" | "am" | "om") => void;
   t: (key: keyof typeof translations.en) => string;
 }) {
   return (
     <div
-      className="flex items-center gap-1 rounded-md border border-border p-1 text-xs font-semibold"
+      className="flex items-center gap-1 rounded-md border border-border bg-background p-1 text-xs font-semibold shadow-sm"
       aria-label={t("languageLabel")}
     >
       <button
         type="button"
+        aria-pressed={language === "en"}
         onClick={() => setLanguage("en")}
-        className={`rounded px-2 py-1 ${language === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "en" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
       >
         {t("english")}
       </button>
       <button
         type="button"
+        aria-pressed={language === "am"}
         onClick={() => setLanguage("am")}
-        className={`rounded px-2 py-1 ${language === "am" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "am" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
       >
         {t("amharic")}
+      </button>
+      <button
+        type="button"
+        aria-pressed={language === "om"}
+        onClick={() => setLanguage("om")}
+        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "om" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+      >
+        {t("oromo")}
       </button>
     </div>
   );

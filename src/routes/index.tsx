@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Gauge, Handshake, RefreshCw, Scale, ShieldCheck, Sprout } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import hero from "../assets/hero.jpg";
 import rawCoffeeBeans from "../assets/raw-coffee-beans.jpg";
 import salt from "../assets/salt.jpg";
@@ -40,6 +40,51 @@ function HomePage() {
   );
 }
 
+function ScrollReveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || typeof window === "undefined") return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -30px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${isVisible ? "is-visible" : ""} ${delay ? `reveal-delay-${delay}` : ""} ${className}`.trim()}
+    >
+      {children}
+    </div>
+  );
+}
+
 function HeroSection() {
   const { t } = useLanguage();
   return (
@@ -47,33 +92,42 @@ function HeroSection() {
       <img
         src={hero}
         alt={t("heroAlt")}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full scale-[1.08] object-cover transition-transform duration-[8000ms] ease-out motion-safe:animate-[slow-pan_18s_ease-in-out_infinite_alternate]"
         width={1920}
         height={1024}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-coffee/70 via-coffee/50 to-background/90" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_45%)]" />
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        <p className="text-sm font-semibold uppercase tracking-widest text-gold">
-          {t("heroEyebrow")}
-        </p>
-        <h1 className="mt-4 text-balance text-4xl font-bold leading-tight text-salt sm:text-5xl md:text-6xl lg:text-7xl">
-          {t("heroTitle")}
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-salt/90 sm:text-xl">{t("heroText")}</p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/products"
-            className="rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
-          >
-            {t("viewProducts")}
-          </Link>
-          <Link
-            to="/contact"
-            className="rounded-md border border-salt/30 bg-salt/10 px-6 py-3 text-sm font-semibold text-salt backdrop-blur transition-all hover:bg-salt/20"
-          >
-            {t("contactUs")}
-          </Link>
-        </div>
+        <ScrollReveal>
+          <p className="text-sm font-semibold uppercase tracking-widest text-gold">
+            {t("heroEyebrow")}
+          </p>
+        </ScrollReveal>
+        <ScrollReveal delay={1}>
+          <h1 className="mt-4 text-balance text-4xl font-bold leading-tight text-salt sm:text-5xl md:text-6xl lg:text-7xl">
+            {t("heroTitle")}
+          </h1>
+        </ScrollReveal>
+        <ScrollReveal delay={2}>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-salt/90 sm:text-xl">{t("heroText")}</p>
+        </ScrollReveal>
+        <ScrollReveal delay={3}>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/products"
+              className="rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl"
+            >
+              {t("viewProducts")}
+            </Link>
+            <Link
+              to="/contact"
+              className="rounded-md border border-salt/30 bg-salt/10 px-6 py-3 text-sm font-semibold text-salt backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:bg-salt/20 hover:shadow-lg"
+            >
+              {t("contactUs")}
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -139,56 +193,61 @@ function IntroSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl text-center">
-        <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-          {t("whatWeStandFor")}
-        </span>
-        <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          {t("coreValues")}
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground">{t("coreValuesText")}</p>
-      </div>
+      <ScrollReveal>
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+            {t("whatWeStandFor")}
+          </span>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            {t("coreValues")}
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">{t("coreValuesText")}</p>
+        </div>
+      </ScrollReveal>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {coreValues.map((value, index) => {
           const ValueIcon = value.icon;
           const isActive = value.id === activeValue;
 
           return (
-            <button
-              key={value.title}
-              type="button"
-              aria-pressed={isActive}
-              onClick={() => setActiveValue(value.id)}
-              className={`group relative overflow-hidden rounded-2xl border p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isActive ? "border-primary bg-card ring-2 ring-primary/15" : "border-border bg-card"}`}
-            >
-              <span className="absolute right-4 top-4 text-xs font-bold text-muted-foreground/60">
-                0{index + 1}
-              </span>
-              <span
-                className={`flex h-11 w-11 items-center justify-center rounded-xl ${value.color} transition-transform duration-300 group-hover:rotate-6`}
+            <ScrollReveal key={value.title} delay={index * 1}>
+              <button
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveValue(value.id)}
+                className={`group relative overflow-hidden rounded-2xl border p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isActive ? "border-primary bg-card ring-2 ring-primary/15" : "border-border bg-card"}`}
               >
-                <ValueIcon className="h-5 w-5" />
-              </span>
-              <h3 className="mt-5 text-lg font-semibold text-card-foreground">{value.title}</h3>
-              <p
-                className={`mt-2 text-sm leading-6 text-muted-foreground transition-all ${isActive ? "opacity-100" : "line-clamp-2 opacity-80"}`}
-              >
-                {value.description}
-              </p>
-              <span
-                className={`mt-4 block h-1 rounded-full transition-all duration-300 ${isActive ? "w-full bg-primary" : "w-8 bg-border group-hover:w-16 group-hover:bg-gold"}`}
-              />
-            </button>
+                <span className="absolute right-4 top-4 text-xs font-bold text-muted-foreground/60">
+                  0{index + 1}
+                </span>
+                <span
+                  className={`flex h-11 w-11 items-center justify-center rounded-xl ${value.color} transition-transform duration-300 group-hover:rotate-6`}
+                >
+                  <ValueIcon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-5 text-lg font-semibold text-card-foreground">{value.title}</h3>
+                <p
+                  className={`mt-2 text-sm leading-6 text-muted-foreground transition-all ${isActive ? "opacity-100" : "line-clamp-2 opacity-80"}`}
+                >
+                  {value.description}
+                </p>
+                <span
+                  className={`mt-4 block h-1 rounded-full transition-all duration-300 ${isActive ? "w-full bg-primary" : "w-8 bg-border group-hover:w-16 group-hover:bg-gold"}`}
+                />
+              </button>
+            </ScrollReveal>
           );
         })}
       </div>
-      <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-primary/20 bg-primary/[0.04] p-5 text-center transition-all duration-300 sm:p-6">
-        <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary">
-          <selectedValue.icon className="h-4 w-4" />
-          {selectedValue.title}
+      <ScrollReveal delay={2}>
+        <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-primary/20 bg-primary/[0.04] p-5 text-center transition-all duration-300 sm:p-6">
+          <div className="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-widest text-primary">
+            <selectedValue.icon className="h-4 w-4" />
+            {selectedValue.title}
+          </div>
+          <p className="mt-2 text-muted-foreground">{selectedValue.description}</p>
         </div>
-        <p className="mt-2 text-muted-foreground">{selectedValue.description}</p>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
@@ -219,48 +278,50 @@ function ProductsSection() {
   return (
     <section className="bg-muted/30 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              {t("discoverProducts")}
-            </h2>
-            <p className="mt-2 text-muted-foreground">{t("discoverProductsText")}</p>
-          </div>
-          <Link
-            to="/products"
-            className="rounded-md border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
-          >
-            {t("viewAllProducts")}
-          </Link>
-        </div>
-        <div className="grid gap-8 md:grid-cols-3">
-          {products.map((product) => (
-            <div
-              key={product.title}
-              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.alt}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-card-foreground">{product.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{product.description}</p>
-                <Link
-                  to="/products"
-                  className="mt-4 inline-flex items-center text-sm font-semibold text-primary hover:underline"
-                >
-                  {t("learnMore")}
-                  <ArrowRightIcon className="ml-1 h-4 w-4" />
-                </Link>
-              </div>
+        <ScrollReveal>
+          <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                {t("discoverProducts")}
+              </h2>
+              <p className="mt-2 text-muted-foreground">{t("discoverProductsText")}</p>
             </div>
+            <Link
+              to="/products"
+              className="rounded-md border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent"
+            >
+              {t("viewAllProducts")}
+            </Link>
+          </div>
+        </ScrollReveal>
+        <div className="grid gap-8 md:grid-cols-3">
+          {products.map((product, index) => (
+            <ScrollReveal key={product.title} delay={index}>
+              <div className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-coffee/75 via-coffee/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.alt}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                  />
+                </div>
+                <div className="relative z-20 p-6">
+                  <h3 className="text-xl font-semibold text-card-foreground">{product.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{product.description}</p>
+                  <Link
+                    to="/products"
+                    className="mt-4 inline-flex items-center text-sm font-semibold text-primary transition-transform duration-200 hover:translate-x-0.5 hover:underline"
+                  >
+                    {t("learnMore")}
+                    <ArrowRightIcon className="ml-1 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -279,36 +340,40 @@ function ValuesSection() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-2">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            {t("whyPartner")}
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">{t("whyPartnerText")}</p>
-          <div className="mt-8 grid gap-6">
-            {values.map((value) => (
-              <div key={value.title} className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                  <CheckIcon className="h-5 w-5" />
+        <ScrollReveal>
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              {t("whyPartner")}
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">{t("whyPartnerText")}</p>
+            <div className="mt-8 grid gap-6">
+              {values.map((value, index) => (
+                <div key={value.title} className={`flex items-start gap-4 reveal-delay-${index + 1}`}>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <CheckIcon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">{value.title}</h3>
+                    <p className="text-sm text-muted-foreground">{value.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">{value.title}</h3>
-                  <p className="text-sm text-muted-foreground">{value.description}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="relative overflow-hidden rounded-2xl">
-          <img
-            src={rawCoffeeBeans}
-            alt={t("coffeeImageAlt")}
-            className="h-full w-full object-cover"
-            loading="lazy"
-            width={1024}
-            height={1024}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-coffee/60 to-transparent" />
-        </div>
+        </ScrollReveal>
+        <ScrollReveal delay={1}>
+          <div className="group relative overflow-hidden rounded-2xl shadow-sm">
+            <img
+              src={rawCoffeeBeans}
+              alt={t("coffeeImageAlt")}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+              width={1024}
+              height={1024}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-coffee/60 to-transparent" />
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
@@ -319,22 +384,28 @@ function CTASection() {
   return (
     <section className="bg-primary py-20 text-primary-foreground">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("readyToSource")}</h2>
-        <p className="mt-4 text-lg text-primary-foreground/90">{t("readyToSourceText")}</p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/contact"
-            className="rounded-md bg-salt px-6 py-3 text-sm font-semibold text-coffee shadow-lg transition-all hover:bg-salt/90 hover:shadow-xl"
-          >
-            {t("contactUs")}
-          </Link>
-          <Link
-            to="/products"
-            className="rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-6 py-3 text-sm font-semibold text-primary-foreground backdrop-blur transition-all hover:bg-primary-foreground/20"
-          >
-            {t("exploreProducts")}
-          </Link>
-        </div>
+        <ScrollReveal>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("readyToSource")}</h2>
+        </ScrollReveal>
+        <ScrollReveal delay={1}>
+          <p className="mt-4 text-lg text-primary-foreground/90">{t("readyToSourceText")}</p>
+        </ScrollReveal>
+        <ScrollReveal delay={2}>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/contact"
+              className="rounded-md bg-salt px-6 py-3 text-sm font-semibold text-coffee shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-salt/90 hover:shadow-xl"
+            >
+              {t("contactUs")}
+            </Link>
+            <Link
+              to="/products"
+              className="rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-6 py-3 text-sm font-semibold text-primary-foreground backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary-foreground/20"
+            >
+              {t("exploreProducts")}
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
