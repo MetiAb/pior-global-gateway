@@ -5,22 +5,21 @@ import hero from "../assets/hero.jpg";
 import rawCoffeeBeans from "../assets/raw-coffee-beans.jpg";
 import salt from "../assets/salt.jpg";
 import medical from "../assets/medical.jpg";
+import { translations, useLanguage } from "../lib/translations";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pior Export Import PLC — Premium Ethiopian Coffee & Salt" },
+      { title: `${translations.en.siteTitle} — Premium Ethiopian Coffee & Salt` },
       {
         name: "description",
-        content:
-          "Pior Export Import PLC supplies Ethiopia's finest Wollega coffee, natural Afar iodised salt, and quality medical devices to exporters and international markets.",
+        content: translations.en.siteDescription,
       },
-      { property: "og:title", content: "Pior Export Import PLC — Premium Ethiopian Coffee & Salt" },
       {
-        property: "og:description",
-        content:
-          "Supplying Ethiopia's finest Wollega coffee, natural Afar iodised salt, and quality medical devices to exporters and international markets.",
+        property: "og:title",
+        content: `${translations.en.siteTitle} — Premium Ethiopian Coffee & Salt`,
       },
+      { property: "og:description", content: translations.en.siteDescription },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -42,11 +41,12 @@ function HomePage() {
 }
 
 function HeroSection() {
+  const { t } = useLanguage();
   return (
     <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden">
       <img
         src={hero}
-        alt="Ethiopian highlands with coffee and salt landscapes"
+        alt={t("heroAlt")}
         className="absolute inset-0 h-full w-full object-cover"
         width={1920}
         height={1024}
@@ -54,27 +54,24 @@ function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-coffee/70 via-coffee/50 to-background/90" />
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
         <p className="text-sm font-semibold uppercase tracking-widest text-gold">
-          Pior Export Import PLC
+          {t("heroEyebrow")}
         </p>
         <h1 className="mt-4 text-balance text-4xl font-bold leading-tight text-salt sm:text-5xl md:text-6xl lg:text-7xl">
-          Supplying Ethiopia’s Finest Coffee and Natural Salt
+          {t("heroTitle")}
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-salt/90 sm:text-xl">
-          Empowering farmers and supplying premium Wollega coffee and Afar salt to the whole sale
-          market.
-        </p>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-salt/90 sm:text-xl">{t("heroText")}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link
             to="/products"
             className="rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
           >
-            View Products
+            {t("viewProducts")}
           </Link>
           <Link
             to="/contact"
             className="rounded-md border border-salt/30 bg-salt/10 px-6 py-3 text-sm font-semibold text-salt backdrop-blur transition-all hover:bg-salt/20"
           >
-            Contact Us
+            {t("contactUs")}
           </Link>
         </div>
       </div>
@@ -83,87 +80,85 @@ function HeroSection() {
 }
 
 function IntroSection() {
-  const [activeValue, setActiveValue] = useState("Reliability");
+  const { t } = useLanguage();
+  const [activeValue, setActiveValue] = useState("reliability");
 
   const coreValues = [
     {
-      title: "Reliability",
-      description:
-        "We strive to be a dependable partner by delivering consistently and managing our commercial and supply-chain responsibilities with care.",
+      id: "reliability",
+      title: t("reliability"),
+      description: t("reliabilityText"),
       icon: ShieldCheck,
       color: "bg-primary/10 text-primary",
     },
     {
-      title: "Integrity",
-      description:
-        "We believe long-term business relationships are built on honesty, professionalism, accountability, and responsible conduct.",
+      id: "integrity",
+      title: t("integrity"),
+      description: t("integrityText"),
       icon: Scale,
       color: "bg-gold/20 text-gold",
     },
     {
-      title: "Quality",
-      description:
-        "We seek quality throughout our sourcing, handling, trading, and distribution activities, with standards appropriate to each sector in which we operate.",
+      id: "quality",
+      title: t("quality"),
+      description: t("qualityText"),
       icon: BadgeCheck,
       color: "bg-accent/15 text-accent",
     },
     {
-      title: "Efficiency",
-      description:
-        "We continuously work to improve our supply chains, logistics, inventory management, and operational processes.",
+      id: "efficiency",
+      title: t("efficiency"),
+      description: t("efficiencyText"),
       icon: Gauge,
       color: "bg-clay/15 text-clay",
     },
     {
-      title: "Partnership",
-      description:
-        "We value long-term relationships with suppliers, customers, and business partners and believe that sustainable growth is built through mutual success.",
+      id: "partnership",
+      title: t("partnership"),
+      description: t("partnershipText"),
       icon: Handshake,
       color: "bg-primary/10 text-primary",
     },
     {
-      title: "Adaptability",
-      description:
-        "Our multi-sector experience allows us to respond to changing markets and explore new opportunities while building on the capabilities we have already developed.",
+      id: "adaptability",
+      title: t("adaptability"),
+      description: t("adaptabilityText"),
       icon: RefreshCw,
       color: "bg-gold/20 text-gold",
     },
     {
-      title: "Responsible Growth",
-      description:
-        "We pursue expansion with careful planning, disciplined operations, and a focus on creating sustainable commercial value.",
+      id: "responsibleGrowth",
+      title: t("responsibleGrowth"),
+      description: t("responsibleGrowthText"),
       icon: Sprout,
       color: "bg-accent/15 text-accent",
     },
   ];
 
-  const selectedValue = coreValues.find((value) => value.title === activeValue) ?? coreValues[0]!;
+  const selectedValue = coreValues.find((value) => value.id === activeValue) ?? coreValues[0]!;
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl text-center">
         <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-          What we stand for
+          {t("whatWeStandFor")}
         </span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Our Core Values
+          {t("coreValues")}
         </h2>
-        <p className="mt-4 text-lg text-muted-foreground">
-          The principles that shape how we work, grow, and build trusted connections across every
-          market.
-        </p>
+        <p className="mt-4 text-lg text-muted-foreground">{t("coreValuesText")}</p>
       </div>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {coreValues.map((value, index) => {
           const ValueIcon = value.icon;
-          const isActive = value.title === activeValue;
+          const isActive = value.id === activeValue;
 
           return (
             <button
               key={value.title}
               type="button"
               aria-pressed={isActive}
-              onClick={() => setActiveValue(value.title)}
+              onClick={() => setActiveValue(value.id)}
               className={`group relative overflow-hidden rounded-2xl border p-5 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${isActive ? "border-primary bg-card ring-2 ring-primary/15" : "border-border bg-card"}`}
             >
               <span className="absolute right-4 top-4 text-xs font-bold text-muted-foreground/60">
@@ -199,26 +194,25 @@ function IntroSection() {
 }
 
 function ProductsSection() {
+  const { t } = useLanguage();
   const products = [
     {
-      title: "Wollega Coffee",
-      description: "100% Arabica , hand-sorted green beans from Qelem Wollega collection centres.",
+      title: t("coffeeTitle"),
+      description: t("coffeeDescription"),
       image: rawCoffeeBeans,
-      alt: "Premium Wollega coffee beans in a burlap sack",
+      alt: t("coffeeAlt"),
     },
     {
-      title: "Afar Natural Salt",
-      description:
-        "Natural iodised salt from the Afar region, rich in minerals and free from artificial additives.",
+      title: t("saltTitle"),
+      description: t("saltDescription"),
       image: salt,
-      alt: "Natural Afar salt mounds at sunset",
+      alt: t("saltAlt"),
     },
     {
-      title: "Medical Supplies",
-      description:
-        "Trusted importer of medicines and medical devices for clinics, hospitals, and healthcare partners.",
+      title: t("medicalTitle"),
+      description: t("medicalDescription"),
       image: medical,
-      alt: "Medical devices and healthcare supplies",
+      alt: t("medicalAlt"),
     },
   ];
 
@@ -228,17 +222,15 @@ function ProductsSection() {
         <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Discover Our Premium Products
+              {t("discoverProducts")}
             </h2>
-            <p className="mt-2 text-muted-foreground">
-              Explore our special aroma commercial coffee, natural Afar salt, and medical imports.
-            </p>
+            <p className="mt-2 text-muted-foreground">{t("discoverProductsText")}</p>
           </div>
           <Link
             to="/products"
             className="rounded-md border border-border bg-background px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
           >
-            View All Products
+            {t("viewAllProducts")}
           </Link>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
@@ -264,7 +256,7 @@ function ProductsSection() {
                   to="/products"
                   className="mt-4 inline-flex items-center text-sm font-semibold text-primary hover:underline"
                 >
-                  Learn more
+                  {t("learnMore")}
                   <ArrowRightIcon className="ml-1 h-4 w-4" />
                 </Link>
               </div>
@@ -277,20 +269,11 @@ function ProductsSection() {
 }
 
 function ValuesSection() {
+  const { t } = useLanguage();
   const values = [
-    {
-      title: "Direct Sourcing",
-      description: "We work with coffee collection centres and salt producers across Ethiopia.",
-    },
-    {
-      title: "Quality Assured",
-      description: "Every batch is inspected for consistency, purity, and export readiness.",
-    },
-    {
-      title: "Global Reach",
-      description:
-        "We serve exporters, distributors, and international buyers with reliable logistics.",
-    },
+    { title: t("directSourcing"), description: t("directSourcingText") },
+    { title: t("qualityAssured"), description: t("qualityAssuredText") },
+    { title: t("globalReach"), description: t("globalReachText") },
   ];
 
   return (
@@ -298,12 +281,9 @@ function ValuesSection() {
       <div className="grid gap-12 lg:grid-cols-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Why Partner With Pior?
+            {t("whyPartner")}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            From highland coffee farms to Afar salt flats and trusted medical manufacturers, we
-            manage every link in the supply chain with integrity and precision.
-          </p>
+          <p className="mt-4 text-lg text-muted-foreground">{t("whyPartnerText")}</p>
           <div className="mt-8 grid gap-6">
             {values.map((value) => (
               <div key={value.title} className="flex items-start gap-4">
@@ -321,7 +301,7 @@ function ValuesSection() {
         <div className="relative overflow-hidden rounded-2xl">
           <img
             src={rawCoffeeBeans}
-            alt="Premium Ethiopian coffee beans"
+            alt={t("coffeeImageAlt")}
             className="h-full w-full object-cover"
             loading="lazy"
             width={1024}
@@ -335,28 +315,24 @@ function ValuesSection() {
 }
 
 function CTASection() {
+  const { t } = useLanguage();
   return (
     <section className="bg-primary py-20 text-primary-foreground">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Ready to Source Premium Ethiopian Products?
-        </h2>
-        <p className="mt-4 text-lg text-primary-foreground/90">
-          Get in touch with our team to discuss export quantities, specifications, and delivery
-          options.
-        </p>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("readyToSource")}</h2>
+        <p className="mt-4 text-lg text-primary-foreground/90">{t("readyToSourceText")}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link
             to="/contact"
             className="rounded-md bg-salt px-6 py-3 text-sm font-semibold text-coffee shadow-lg transition-all hover:bg-salt/90 hover:shadow-xl"
           >
-            Contact Us
+            {t("contactUs")}
           </Link>
           <Link
             to="/products"
             className="rounded-md border border-primary-foreground/30 bg-primary-foreground/10 px-6 py-3 text-sm font-semibold text-primary-foreground backdrop-blur transition-all hover:bg-primary-foreground/20"
           >
-            Explore Products
+            {t("exploreProducts")}
           </Link>
         </div>
       </div>

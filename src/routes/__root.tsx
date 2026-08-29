@@ -11,22 +11,22 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { LanguageProvider, translations, useLanguage } from "../lib/translations";
 
 function NotFoundComponent() {
+  const { t } = useLanguage();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">{t("notFoundTitle")}</h2>
+        <p className="mt-2 text-sm text-muted-foreground">{t("notFoundText")}</p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            {t("goHome")}
           </Link>
         </div>
       </div>
@@ -37,6 +37,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useLanguage();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -45,11 +46,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          {t("loadErrorTitle")}
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("loadErrorText")}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -58,13 +57,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Try again
+            {t("tryAgain")}
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
-            Go home
+            {t("goHome")}
           </a>
         </div>
       </div>
@@ -77,20 +76,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pior Export Import PLC" },
+      { title: translations.en.siteTitle },
       {
         name: "description",
-        content:
-          "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets.",
+        content: translations.en.siteDescription,
       },
-      { name: "author", content: "Pior Export Import PLC" },
-      { property: "og:site_name", content: "Pior Export Import PLC" },
+      { name: "author", content: translations.en.siteTitle },
+      { property: "og:site_name", content: translations.en.siteTitle },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "Pior Export Import PLC" },
+      { property: "og:title", content: translations.en.siteTitle },
       {
         property: "og:description",
-        content:
-          "Premium Ethiopian Wollega coffee, natural Afar iodised salt, and trusted medical supplies — supplied to exporters and international markets.",
+        content: translations.en.siteDescription,
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@PiorExportImport" },
@@ -108,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Pior Export Import PLC",
+          name: translations.en.siteTitle,
           url: "https://pior-export-import.com",
           email: "piorinfocenter@gmail.com",
           telephone: "+251911228457",
@@ -136,7 +133,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <Scripts />
       </body>
     </html>
@@ -161,12 +158,13 @@ function RootComponent() {
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/about", label: "About" },
-    { to: "/products", label: "Products" },
-    { to: "/contact", label: "Contact" },
+    { to: "/", label: t("home") },
+    { to: "/about", label: t("about") },
+    { to: "/products", label: t("products") },
+    { to: "/contact", label: t("contact") },
   ];
 
   return (
@@ -176,9 +174,9 @@ function Header() {
           to="/"
           className="flex items-center gap-2 text-xl font-semibold tracking-tight text-foreground"
         >
-          <img src="/favicon.png" alt="Pior" className="h-8 w-8" />
-          <span className="hidden sm:inline">Pior Export Import PLC</span>
-          <span className="sm:hidden">Pior</span>
+          <img src="/favicon.png" alt={t("logoAlt")} className="h-8 w-8" />
+          <span className="hidden sm:inline">{t("siteTitle")}</span>
+          <span className="sm:hidden">{t("brandShort")}</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -196,14 +194,15 @@ function Header() {
             to="/contact"
             className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Get in Touch
+            {t("getInTouch")}
           </Link>
+          <LanguageSwitcher language={language} setLanguage={setLanguage} t={t} />
         </nav>
 
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="rounded-md p-2 text-foreground md:hidden"
-          aria-label="Toggle menu"
+          aria-label={t("toggleMenu")}
         >
           {isOpen ? <XIcon /> : <MenuIcon />}
         </button>
@@ -227,8 +226,9 @@ function Header() {
               onClick={() => setIsOpen(false)}
               className="mt-2 rounded-md bg-primary px-3 py-2 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Get in Touch
+              {t("getInTouch")}
             </Link>
+            <LanguageSwitcher language={language} setLanguage={setLanguage} t={t} />
           </nav>
         </div>
       )}
@@ -237,47 +237,45 @@ function Header() {
 }
 
 function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="border-t border-border bg-muted/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <img src="/favicon.png" alt="Pior" className="h-8 w-8" />
-              Pior Export Import PLC
+              <img src="/favicon.png" alt={t("logoAlt")} className="h-8 w-8" />
+              {t("siteTitle")}
             </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Supplying Ethiopia’s finest Wollega coffee, natural Afar salt, and quality medical
-              products to the world.
-            </p>
+            <p className="mt-4 text-sm text-muted-foreground">{t("footerText")}</p>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">Quick Links</h3>
+            <h3 className="text-sm font-semibold text-foreground">{t("quickLinks")}</h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link to="/" className="transition-colors hover:text-foreground">
-                  Home
+                  {t("home")}
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="transition-colors hover:text-foreground">
-                  About
+                  {t("about")}
                 </Link>
               </li>
               <li>
                 <Link to="/products" className="transition-colors hover:text-foreground">
-                  Products
+                  {t("products")}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="transition-colors hover:text-foreground">
-                  Contact
+                  {t("contact")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-foreground">Contact</h3>
+            <h3 className="text-sm font-semibold text-foreground">{t("contact")}</h3>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>piorinfocenter@gmail.com</li>
               <li>+251 911 228 457</li>
@@ -287,10 +285,42 @@ function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-border pt-6 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Pior Export Import PLC. All rights reserved.
+          © {new Date().getFullYear()} {t("siteTitle")}. {t("rights")}
         </div>
       </div>
     </footer>
+  );
+}
+
+function LanguageSwitcher({
+  language,
+  setLanguage,
+  t,
+}: {
+  language: "en" | "am";
+  setLanguage: (language: "en" | "am") => void;
+  t: (key: keyof typeof translations.en) => string;
+}) {
+  return (
+    <div
+      className="flex items-center gap-1 rounded-md border border-border p-1 text-xs font-semibold"
+      aria-label={t("languageLabel")}
+    >
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        className={`rounded px-2 py-1 ${language === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+      >
+        {t("english")}
+      </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("am")}
+        className={`rounded px-2 py-1 ${language === "am" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+      >
+        {t("amharic")}
+      </button>
+    </div>
   );
 }
 

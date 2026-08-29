@@ -2,15 +2,18 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import rawCoffeeBeans from "../assets/raw-coffee-beans.jpg";
 import salt from "../assets/salt.jpg";
 import medical from "../assets/medical.jpg";
-
+import { translations, useLanguage } from "../lib/translations";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Products — Pior Export Import PLC" },
-      { name: "description", content: "Explore Pior Export Import PLC’s products: Wollega specialty coffee, natural Afar iodised salt, and imported medical devices." },
-      { property: "og:title", content: "Products — Pior Export Import PLC" },
-      { property: "og:description", content: "Wollega specialty coffee, natural Afar iodised salt, and imported medical devices." },
+      { title: `Products — ${translations.en.siteTitle}` },
+      {
+        name: "description",
+        content: translations.en.siteDescription,
+      },
+      { property: "og:title", content: `Products — ${translations.en.siteTitle}` },
+      { property: "og:description", content: translations.en.siteDescription },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/products" },
     ],
@@ -20,57 +23,43 @@ export const Route = createFileRoute("/products")({
 });
 
 function ProductsPage() {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col">
-      <PageHeader
-        title="Our Products"
-        subtitle="Premium Ethiopian exports and trusted medical imports"
-      />
+      <PageHeader title={t("productsTitle")} subtitle={t("productsSubtitle")} />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12">
           <ProductFeature
             image={rawCoffeeBeans}
-            alt="Wollega coffee beans"
-            label="High Land Commercial Coffee"
-            title="Wollega Origin Coffee"
-            description="We supply premium Ethiopian coffee sourced from the Wollega region, known for its distinctive rich flavor, full body, and exceptional quality. Our coffee is carefully selected and processed to preserve its authentic Ethiopian character."
-            features={[
-              "Direct from coffee collection centres in Qelem Wollega",
-              "100% Arabica and hand-sorted",
-              "Available as green beans for export",
-              "Rich flavor, full body, and complex notes",
-            ]}
+            alt={t("wollegaAlt")}
+            label={t("highLandCoffee")}
+            title={t("wollegaOrigin")}
+            description={t("wollegaText")}
+            features={t("wollegaFeatures").split("|")}
           />
 
           <ProductFeature
             image={salt}
-            alt="Natural Afar salt mounds in Ethiopia"
-            label="Natural Salt"
-            title="Natural Iodised Afar Salt"
-            description="Our natural iodised salt is sourced from the Afar region, an area renowned for traditional salt harvesting methods that date back centuries. The salt is carefully hand-harvested and processed to maintain its purity and natural mineral composition."
-            features={[
-              "Sourced from the Afar region, Ethiopia",
-              "Rich in essential minerals",
-              "Free from artificial additives",
-              "Unique texture and flavor profile",
-            ]}
+            alt={t("afarSaltAlt")}
+            label={t("naturalSalt")}
+            title={t("afarSaltTitle")}
+            description={t("afarSaltText")}
+            features={t("afarFeatures").split("|")}
             reverse
             extra={
               <div className="mt-6 rounded-xl border border-border bg-card p-5">
                 <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-                  Production &amp; Storage
+                  {t("productionStorage")}
                 </p>
                 <dl className="mt-3 space-y-2 text-sm">
                   <div>
-                    <dt className="font-semibold text-foreground">Producer</dt>
-                    <dd className="text-muted-foreground">Sino Salt PLC and other manufacturers</dd>
+                    <dt className="font-semibold text-foreground">{t("producer")}</dt>
+                    <dd className="text-muted-foreground">{t("producerValue")}</dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-foreground">Warehouse</dt>
-                    <dd className="text-muted-foreground">
-                      Sheger City, Burayu, Ashewa Meda, Block 8, Shade No. 238
-                    </dd>
+                    <dt className="font-semibold text-foreground">{t("warehouse")}</dt>
+                    <dd className="text-muted-foreground">{t("warehouseValue")}</dd>
                   </div>
                 </dl>
               </div>
@@ -79,16 +68,11 @@ function ProductsPage() {
 
           <ProductFeature
             image={medical}
-            alt="Medical devices and healthcare supplies"
-            label="Medical Supplies"
-            title="Medicine & Medical Device Imports"
-            description="We import quality-assured medicines from qualified international suppliers and distribute them reliably to healthcare providers, pharmacies, and wholesalers across Ethiopia"
-            features={[
-              "Trusted medical device sourcing",
-              "Compliant import procedures",
-              "Reliable supply for clinics and hospitals",
-              "Focus on quality and patient safety",
-            ]}
+            alt={t("medicalAltFull")}
+            label={t("medicalSupplies")}
+            title={t("medicineTitle")}
+            description={t("medicineText")}
+            features={t("medicalFeatures").split("|")}
           />
         </div>
       </section>
@@ -96,16 +80,14 @@ function ProductsPage() {
       <section className="bg-muted/30 py-16">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Interested in bulk supply or export orders?
+            {t("bulkTitle")}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Contact us for product specifications, quantities, pricing, and shipping arrangements.
-          </p>
+          <p className="mt-4 text-lg text-muted-foreground">{t("bulkText")}</p>
           <Link
             to="/contact"
             className="mt-8 inline-flex rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
           >
-            Request a Quote
+            {t("requestQuote")}
           </Link>
         </div>
       </section>
@@ -133,7 +115,9 @@ function ProductFeature({
   extra?: React.ReactNode;
 }) {
   return (
-    <div className={`grid items-center gap-6 sm:grid-cols-2 sm:gap-8 ${reverse ? "sm:grid-flow-dense" : ""}`}>
+    <div
+      className={`grid items-center gap-6 sm:grid-cols-2 sm:gap-8 ${reverse ? "sm:grid-flow-dense" : ""}`}
+    >
       <div className={`overflow-hidden rounded-2xl ${reverse ? "sm:col-start-2" : ""}`}>
         <img
           src={image}
@@ -145,7 +129,9 @@ function ProductFeature({
         />
       </div>
       <div className={reverse ? "sm:col-start-1" : ""}>
-        <span className="text-sm font-semibold uppercase tracking-widest text-primary">{label}</span>
+        <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+          {label}
+        </span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {title}
         </h2>
@@ -171,9 +157,7 @@ function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
     <div className="relative overflow-hidden border-b border-coffee/80 bg-coffee py-20 text-salt">
       <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">
-          {title}
-        </h1>
+        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">{title}</h1>
         <p className="mt-4 text-lg text-salt/80">{subtitle}</p>
       </div>
     </div>
@@ -182,7 +166,18 @@ function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
 
 function CheckIcon({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
