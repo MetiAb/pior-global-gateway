@@ -74,62 +74,64 @@ function ProductsPage() {
     <div className="flex flex-col">
       <PageHeader title={t("productsTitle")} subtitle={t("productsSubtitle")} />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12">
-          <ScrollReveal delay={1}>
-            <ProductFeature
-              image={rawCoffeeBeans}
-              alt={t("wollegaAlt")}
-              label={t("highLandCoffee")}
-              title={t("wollegaOrigin")}
-              description={t("wollegaText")}
-              features={t("wollegaFeatures").split("|")}
-            />
-          </ScrollReveal>
+      <section className="bg-secondary/30 py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:gap-10">
+            <ScrollReveal delay={1}>
+              <ProductFeature
+                image={rawCoffeeBeans}
+                alt={t("wollegaAlt")}
+                label={t("highLandCoffee")}
+                title={t("wollegaOrigin")}
+                description={t("wollegaText")}
+                features={t("wollegaFeatures").split("|")}
+              />
+            </ScrollReveal>
 
-          <ScrollReveal delay={2}>
-            <ProductFeature
-              image={salt}
-              alt={t("afarSaltAlt")}
-              label={t("naturalSalt")}
-              title={t("afarSaltTitle")}
-              description={t("afarSaltText")}
-              features={t("afarFeatures").split("|")}
-              reverse
-              extra={
-                <div className="mt-6 rounded-xl border border-border bg-card p-5 shadow-sm">
-                  <p className="text-sm font-semibold uppercase tracking-widest text-primary">
-                    {t("productionStorage")}
-                  </p>
-                  <dl className="mt-3 space-y-2 text-sm">
-                    <div>
-                      <dt className="font-semibold text-foreground">{t("producer")}</dt>
-                      <dd className="text-muted-foreground">{t("producerValue")}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-foreground">{t("warehouse")}</dt>
-                      <dd className="text-muted-foreground">{t("warehouseValue")}</dd>
-                    </div>
-                  </dl>
-                </div>
-              }
-            />
-          </ScrollReveal>
+            <ScrollReveal delay={2}>
+              <ProductFeature
+                image={salt}
+                alt={t("afarSaltAlt")}
+                label={t("naturalSalt")}
+                title={t("afarSaltTitle")}
+                description={t("afarSaltText")}
+                features={t("afarFeatures").split("|")}
+                reverse
+                extra={
+                  <div className="mt-6 rounded-xl border border-border bg-card p-5 shadow-sm">
+                    <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+                      {t("productionStorage")}
+                    </p>
+                    <dl className="mt-3 space-y-2 text-sm">
+                      <div>
+                        <dt className="font-semibold text-foreground">{t("producer")}</dt>
+                        <dd className="text-muted-foreground">{t("producerValue")}</dd>
+                      </div>
+                      <div>
+                        <dt className="font-semibold text-foreground">{t("warehouse")}</dt>
+                        <dd className="text-muted-foreground">{t("warehouseValue")}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                }
+              />
+            </ScrollReveal>
 
-          <ScrollReveal delay={3}>
-            <ProductFeature
-              image={medical}
-              alt={t("medicalAltFull")}
-              label={t("medicalSupplies")}
-              title={t("medicineTitle")}
-              description={t("medicineText")}
-              features={t("medicalFeatures").split("|")}
-            />
-          </ScrollReveal>
+            <ScrollReveal delay={3}>
+              <ProductFeature
+                image={medical}
+                alt={t("medicalAltFull")}
+                label={t("medicalSupplies")}
+                title={t("medicineTitle")}
+                description={t("medicineText")}
+                features={t("medicalFeatures").split("|")}
+              />
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      <section className="bg-muted/30 py-16">
+      <section className="border-t border-gold/20 bg-background py-16">
         <ScrollReveal>
           <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -172,7 +174,9 @@ function ProductFeature({
     <div
       className={`grid items-center gap-6 sm:grid-cols-2 sm:gap-8 ${reverse ? "sm:grid-flow-dense" : ""}`}
     >
-      <div className={`group relative overflow-hidden rounded-2xl ${reverse ? "sm:col-start-2" : ""}`}>
+      <div
+        className={`group relative aspect-[4/3] overflow-hidden rounded-lg border border-coffee/10 bg-muted shadow-md ${reverse ? "sm:col-start-2" : ""}`}
+      >
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-coffee/60 via-coffee/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <img
           src={image}
@@ -183,10 +187,10 @@ function ProductFeature({
           height={1024}
         />
       </div>
-      <div className={reverse ? "sm:col-start-1" : ""}>
-        <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-          {label}
-        </span>
+      <div
+        className={`rounded-xl border border-border/70 bg-card p-6 shadow-sm sm:p-8 ${reverse ? "sm:col-start-1" : ""}`}
+      >
+        <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">{label}</span>
         <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           {title}
         </h2>

@@ -1,11 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BadgeCheck, Gauge, Handshake, RefreshCw, Scale, ShieldCheck, Sprout } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import hero from "../assets/hero.jpg";
 import rawCoffeeBeans from "../assets/raw-coffee-beans.jpg";
 import salt from "../assets/salt.jpg";
 import medical from "../assets/medical.jpg";
 import { translations, useLanguage } from "../lib/translations";
+import DeferredScene from "../components/3d/DeferredScene";
+
+const CoreValues3D = lazy(() => import("../components/3d/CoreValues3D"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -193,8 +196,8 @@ function IntroSection() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <ScrollReveal>
-        <div className="mx-auto max-w-3xl text-center">
+      <ScrollReveal className="mx-auto grid w-full max-w-6xl items-center gap-3 lg:grid-cols-[1fr_0.85fr]">
+        <div className="mx-auto max-w-3xl text-center lg:text-left">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
             {t("whatWeStandFor")}
           </span>
@@ -203,6 +206,11 @@ function IntroSection() {
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">{t("coreValuesText")}</p>
         </div>
+        <DeferredScene className="h-52 w-full sm:h-64 lg:h-72">
+          <Suspense fallback={null}>
+            <CoreValues3D className="h-full w-full" />
+          </Suspense>
+        </DeferredScene>
       </ScrollReveal>
       <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {coreValues.map((value, index) => {
@@ -348,7 +356,10 @@ function ValuesSection() {
             <p className="mt-4 text-lg text-muted-foreground">{t("whyPartnerText")}</p>
             <div className="mt-8 grid gap-6">
               {values.map((value, index) => (
-                <div key={value.title} className={`flex items-start gap-4 reveal-delay-${index + 1}`}>
+                <div
+                  key={value.title}
+                  className={`flex items-start gap-4 reveal-delay-${index + 1}`}
+                >
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <CheckIcon className="h-5 w-5" />
                   </div>

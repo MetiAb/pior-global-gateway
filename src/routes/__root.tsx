@@ -241,48 +241,61 @@ function Header() {
 function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="border-t border-border bg-muted/50">
+    <footer className="relative overflow-hidden border-t border-gold/50 bg-coffee text-salt">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_1fr] md:gap-14">
           <div>
-            <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+            <div className="flex items-center gap-3 text-lg font-semibold text-salt">
               <img src="/favicon.png" alt={t("logoAlt")} className="h-8 w-8" />
               {t("siteTitle")}
             </div>
-            <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("footerText")}</p>
+            <div className="mt-5 h-px w-16 bg-gold/80" />
+            <p className="mt-4 max-w-sm text-sm leading-6 text-salt/70">{t("footerText")}</p>
           </div>
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-foreground">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-gold">
               {t("quickLinks")}
             </h3>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+            <ul className="mt-5 space-y-3 text-sm text-salt/70">
               <li>
-                <Link to="/" className="transition-colors hover:text-foreground">
+                <Link
+                  to="/"
+                  className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-gold"
+                >
                   {t("home")}
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="transition-colors hover:text-foreground">
+                <Link
+                  to="/about"
+                  className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-gold"
+                >
                   {t("about")}
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="transition-colors hover:text-foreground">
+                <Link
+                  to="/products"
+                  className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-gold"
+                >
                   {t("products")}
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="transition-colors hover:text-foreground">
+                <Link
+                  to="/contact"
+                  className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-gold"
+                >
                   {t("contact")}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-foreground">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-gold">
               {t("contact")}
             </h3>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+            <ul className="mt-5 space-y-3 break-words text-sm leading-6 text-salt/70">
               <li>piorinfocenter@gmail.com</li>
               <li>+251 911 228 457</li>
               <li>+251 115 587 373</li>
@@ -290,7 +303,7 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+        <div className="mt-12 border-t border-salt/15 pt-6 text-center text-xs text-salt/55">
           © {new Date().getFullYear()} {t("siteTitle")}. {t("rights")}
         </div>
       </div>
@@ -308,35 +321,19 @@ function LanguageSwitcher({
   t: (key: keyof typeof translations.en) => string;
 }) {
   return (
-    <div
-      className="flex items-center gap-1 rounded-md border border-border bg-background p-1 text-xs font-semibold shadow-sm"
-      aria-label={t("languageLabel")}
-    >
-      <button
-        type="button"
-        aria-pressed={language === "en"}
-        onClick={() => setLanguage("en")}
-        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "en" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+    <label className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
+      <span>{t("languageLabel")}</span>
+      <select
+        value={language}
+        onChange={(event) => setLanguage(event.target.value as "en" | "am" | "om")}
+        aria-label={t("languageLabel")}
+        className="rounded-md border border-border bg-background px-2 py-1.5 text-xs font-semibold text-foreground shadow-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
       >
-        {t("english")}
-      </button>
-      <button
-        type="button"
-        aria-pressed={language === "am"}
-        onClick={() => setLanguage("am")}
-        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "am" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-      >
-        {t("amharic")}
-      </button>
-      <button
-        type="button"
-        aria-pressed={language === "om"}
-        onClick={() => setLanguage("om")}
-        className={`rounded px-2 py-1.5 transition-all duration-200 ${language === "om" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-      >
-        {t("oromo")}
-      </button>
-    </div>
+        <option value="en">{t("english")}</option>
+        <option value="am">{t("amharic")}</option>
+        <option value="om">{t("oromo")}</option>
+      </select>
+    </label>
   );
 }
 

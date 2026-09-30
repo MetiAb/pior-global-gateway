@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import aboutImage from "../assets/about-p.jpeg";
 import etagegnPortrait from "../assets/etagegn.jpg";
 import aberaPortrait from "../assets/abera.jpg";
 import demoPortrait from "../assets/demie.jpg";
@@ -105,52 +106,54 @@ function AboutPage() {
 
   return (
     <div className="flex flex-col">
-      <PageHeader title={t("aboutTitle")} subtitle={t("aboutSubtitle")} />
+      <AboutHero title={t("aboutTitle")} subtitle={t("aboutSubtitle")} imageAlt={t("heroAlt")} />
 
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-        <div>
-          <ScrollReveal>
-            <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-              {t("ourHistory")}
-            </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              {t("heritageTitle")}
-            </h2>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{t("heritageText")}</p>
-          </ScrollReveal>
-          <div className="relative mt-10 space-y-5 before:absolute before:bottom-5 before:left-6 before:top-5 before:w-px before:bg-border">
-            <ScrollReveal delay={1}>
-              <HistoryCard
-                icon={Coffee}
-                year={t("beganYear")}
-                title={t("beganTitle")}
-                description={t("beganText")}
-                color="bg-gold/15 text-gold"
-              />
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <div>
+            <ScrollReveal>
+              <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+                {t("ourHistory")}
+              </span>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                {t("heritageTitle")}
+              </h2>
+              <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{t("heritageText")}</p>
             </ScrollReveal>
-            <ScrollReveal delay={2}>
-              <HistoryCard
-                icon={Boxes}
-                year={t("growingExperience")}
-                title={t("foundationTitle")}
-                description={t("foundationText")}
-                color="bg-primary/10 text-primary"
-              />
-            </ScrollReveal>
-            <ScrollReveal delay={3}>
-              <HistoryCard
-                icon={HeartPulse}
-                year={t("todayBeyond")}
-                title={t("expandingTitle")}
-                description={t("expandingText")}
-                color="bg-accent/15 text-accent"
-              />
-            </ScrollReveal>
+            <div className="relative mt-10 space-y-5 before:absolute before:bottom-5 before:left-6 before:top-5 before:w-px before:bg-border">
+              <ScrollReveal delay={1}>
+                <HistoryCard
+                  icon={Coffee}
+                  year={t("beganYear")}
+                  title={t("beganTitle")}
+                  description={t("beganText")}
+                  color="bg-gold/15 text-gold"
+                />
+              </ScrollReveal>
+              <ScrollReveal delay={2}>
+                <HistoryCard
+                  icon={Boxes}
+                  year={t("growingExperience")}
+                  title={t("foundationTitle")}
+                  description={t("foundationText")}
+                  color="bg-primary/10 text-primary"
+                />
+              </ScrollReveal>
+              <ScrollReveal delay={3}>
+                <HistoryCard
+                  icon={HeartPulse}
+                  year={t("todayBeyond")}
+                  title={t("expandingTitle")}
+                  description={t("expandingText")}
+                  color="bg-accent/15 text-accent"
+                />
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-muted/30 py-16">
+      <section className="border-y border-gold/20 bg-secondary/55 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
             <ScrollReveal>
@@ -177,7 +180,7 @@ function AboutPage() {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={1}>
-              <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-sm transition-all duration-300 sm:p-10">
+              <div className="relative overflow-hidden rounded-xl border border-gold/25 bg-card p-8 shadow-lg shadow-coffee/5 transition-all duration-300 sm:p-10">
                 <div className="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-gold/20" />
                 <div className="relative" key={activePillar}>
                   <div className="flex items-center justify-between">
@@ -213,7 +216,9 @@ function AboutPage() {
                       {[t("people"), t("partnerships"), t("markets")].map((step, index) => (
                         <div key={step} className="flex min-w-0 flex-1 items-center gap-2">
                           <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-gold ring-4 ring-gold/15" />
-                          <span className="truncate text-xs font-medium text-foreground">{step}</span>
+                          <span className="truncate text-xs font-medium text-foreground">
+                            {step}
+                          </span>
                           {index < 2 && <div className="h-px flex-1 bg-border" />}
                         </div>
                       ))}
@@ -429,14 +434,35 @@ function SetsUsApartCard({
   );
 }
 
-function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
+function AboutHero({
+  title,
+  subtitle,
+  imageAlt,
+}: {
+  title: string;
+  subtitle: string;
+  imageAlt: string;
+}) {
   return (
-    <div className="relative overflow-hidden border-b border-coffee/80 bg-coffee py-20 text-salt">
-      <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
-      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-salt sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-lg text-salt/80">{subtitle}</p>
+    <section className="border-b border-gold/30 bg-coffee text-salt">
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-14 lg:px-8 lg:py-16">
+        <div className="max-w-xl">
+          <div className="mb-6 h-1 w-14 rounded-full bg-gold" />
+          <h1 className="text-4xl font-bold leading-tight sm:text-5xl">{title}</h1>
+          <p className="mt-5 max-w-md text-lg leading-7 text-salt/80">{subtitle}</p>
+        </div>
+        <div className="relative overflow-hidden rounded-xl border border-salt/15 shadow-2xl shadow-black/20">
+          <img
+            src={aboutImage}
+            alt={imageAlt}
+            className="aspect-[3/2] w-full object-cover object-center"
+            width={620}
+            height={400}
+            fetchPriority="high"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-1 bg-gold" />
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

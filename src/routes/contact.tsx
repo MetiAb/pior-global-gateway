@@ -97,139 +97,147 @@ function ContactPage() {
     <div className="flex flex-col">
       <PageHeader title={t("contactTitle")} subtitle={t("contactSubtitle")} />
 
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                {t("getInTouchTitle")}
-              </h2>
-              <p className="mt-2 text-muted-foreground">{t("getInTouchText")}</p>
+      <section className="bg-secondary/30 py-14 sm:py-16">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2">
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground">
+                  {t("getInTouchTitle")}
+                </h2>
+                <p className="mt-2 text-muted-foreground">{t("getInTouchText")}</p>
+              </div>
+
+              <div className="grid gap-4">
+                <ContactCard
+                  icon={<Mail className="h-5 w-5" />}
+                  label={t("email")}
+                  value="piorinfocenter@gmail.com"
+                  href="mailto:piorinfocenter@gmail.com"
+                />
+                <ContactCard
+                  icon={<Phone className="h-5 w-5" />}
+                  label={t("mobile")}
+                  value="+251 911 228 457"
+                  href="tel:+251911228457"
+                />
+                <ContactCard
+                  icon={<Building2 className="h-5 w-5" />}
+                  label={t("landline")}
+                  value="+251 115 587 373"
+                  href="tel:+251115587373"
+                />
+                <ContactCard
+                  icon={<MapPin className="h-5 w-5" />}
+                  label={t("officeLocation")}
+                  value={t("officeAddress")}
+                />
+              </div>
             </div>
 
-            <div className="grid gap-4">
-              <ContactCard
-                icon={<Mail className="h-5 w-5" />}
-                label={t("email")}
-                value="piorinfocenter@gmail.com"
-                href="mailto:piorinfocenter@gmail.com"
-              />
-              <ContactCard
-                icon={<Phone className="h-5 w-5" />}
-                label={t("mobile")}
-                value="+251 911 228 457"
-                href="tel:+251911228457"
-              />
-              <ContactCard
-                icon={<Building2 className="h-5 w-5" />}
-                label={t("landline")}
-                value="+251 115 587 373"
-                href="tel:+251115587373"
-              />
-              <ContactCard
-                icon={<MapPin className="h-5 w-5" />}
-                label={t("officeLocation")}
-                value={t("officeAddress")}
-              />
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-lg sm:p-8">
-            <h3 className="text-xl font-semibold text-card-foreground">{t("sendInquiry")}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{t("inquiryText")}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {inquiryTypes.map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setInquiryType(type)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${inquiryType === type ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"}`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-            <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-xl border border-gold/25 bg-card p-6 shadow-lg shadow-coffee/5 transition-all duration-200 sm:p-8">
+              <h3 className="text-xl font-semibold text-card-foreground">{t("sendInquiry")}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{t("inquiryText")}</p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {inquiryTypes.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setInquiryType(type)}
+                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-200 ${inquiryType === type ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"}`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+              <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium text-card-foreground">
+                      {t("name")}
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      required
+                      maxLength={100}
+                      type="text"
+                      placeholder={t("yourName")}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium text-card-foreground">
+                      {t("email")}
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      required
+                      maxLength={255}
+                      type="email"
+                      placeholder={t("emailPlaceholder")}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-card-foreground">
-                    {t("name")}
+                  <label htmlFor="subject" className="text-sm font-medium text-card-foreground">
+                    {t("subject")}
                   </label>
                   <input
-                    id="name"
-                    name="name"
+                    id="subject"
+                    name="subject"
                     required
-                    maxLength={100}
+                    maxLength={150}
                     type="text"
-                    placeholder={t("yourName")}
+                    placeholder={t("productInquiry")}
+                    value={inquiryType}
+                    onChange={(event) => setInquiryType(event.target.value)}
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-card-foreground">
-                    {t("email")}
+                  <label htmlFor="message" className="text-sm font-medium text-card-foreground">
+                    {t("message")}
                   </label>
-                  <input
-                    id="email"
-                    name="email"
+                  <textarea
+                    id="message"
+                    name="message"
                     required
-                    maxLength={255}
-                    type="email"
-                    placeholder={t("emailPlaceholder")}
+                    maxLength={2000}
+                    rows={5}
+                    placeholder={t("messagePlaceholder")}
+                    onChange={(event) => setMessageLength(event.target.value.length)}
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
                   />
+                  <p className="text-right text-xs text-muted-foreground">{messageLength}/2000</p>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium text-card-foreground">
-                  {t("subject")}
-                </label>
-                <input
-                  id="subject"
-                  name="subject"
-                  required
-                  maxLength={150}
-                  type="text"
-                  placeholder={t("productInquiry")}
-                  value={inquiryType}
-                  onChange={(event) => setInquiryType(event.target.value)}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium text-card-foreground">
-                  {t("message")}
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  maxLength={2000}
-                  rows={5}
-                  placeholder={t("messagePlaceholder")}
-                  onChange={(event) => setMessageLength(event.target.value.length)}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15"
-                />
-                <p className="text-right text-xs text-muted-foreground">{messageLength}/2000</p>
-              </div>
-              {submissionStatus === "success" && (
-                <p className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700" role="status">
-                  {t("sentSuccess")}
-                </p>
-              )}
-              {submissionStatus === "error" && (
-                <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
-                  {t("sendError")}
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {isSubmitting ? t("sending") : t("sendMessage")}
-              </button>
-            </form>
+                {submissionStatus === "success" && (
+                  <p
+                    className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700"
+                    role="status"
+                  >
+                    {t("sentSuccess")}
+                  </p>
+                )}
+                {submissionStatus === "error" && (
+                  <p
+                    className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+                    role="alert"
+                  >
+                    {t("sendError")}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmitting ? t("sending") : t("sendMessage")}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
@@ -304,12 +312,12 @@ function ContactCard({
   return href ? (
     <a
       href={href}
-      className="group block rounded-xl border border-border bg-card p-4 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+      className="group block rounded-xl border border-gold/20 bg-salt/75 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/60 hover:bg-card hover:shadow-md"
     >
       {content}
     </a>
   ) : (
-    <div className="rounded-xl border border-border bg-card p-4">{content}</div>
+    <div className="rounded-xl border border-gold/20 bg-salt/75 p-4">{content}</div>
   );
 }
 
